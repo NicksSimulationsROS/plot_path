@@ -15,6 +15,7 @@ class plot_path_node:
   def params(self):
     self.frame_from = rospy.get_param('~frame_from', 'map')
     self.frame_to   = rospy.get_param('~frame_to', 'base_link')
+    self.sleep_time = rospy.get_param('~sleep_time', 0);
 
   def pubs(self):
     self.pub = rospy.Publisher('path', Path, queue_size=1)
@@ -39,6 +40,7 @@ class plot_path_node:
 if __name__ == '__main__':
   rospy.init_node('plot_path', anonymous=True)
   obj = plot_path_node()
+  rospy.sleep(obj.sleep_time);
   r = rospy.Rate(5)  #Hz
   while not rospy.is_shutdown():
     obj.loop()
